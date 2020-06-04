@@ -7,6 +7,10 @@
 	    <h1 >Le juste prix</h1>
         <!--{% block content %}-->
         <div>
+            <p>{{ name }}</p>
+            <img src="{{ image }}">
+        </div>
+        <div>
              <form method="post" action="/">
                 <label >Entrer un prix :</label>
                 <input type="text" name="rep_user" required>
@@ -14,11 +18,12 @@
             </form>
         </div>
         <div>
-            <!--{% set i = 1 %}
-            {%for i in p %}-->
-                <p>resultat : {{ message }} </p>
-                <!--{% set i = i + 1 %}-->
-           <!-- {%endfor%}-->
+
+            <p>Résultat : {{ message }} </p>
+
+            {%for i in try_list%}
+            <li>{{ i }}</li>
+            {%endfor%}
         </div>
     </body>
 
