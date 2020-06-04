@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
     <head>
 		<link rel ="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}"
     </head>
     <body>
 	    <h1 >Le juste prix</h1>
-        {% block content %}
+        <!--{% block content %}-->
         <div>
              <form method="post" action="/">
                 <label >Entrer un prix :</label>
@@ -14,14 +14,13 @@
             </form>
         </div>
         <div>
-            {%for i in message %}
+            <!--{% set i = 1 %}
+            {%for i in p %}-->
                 <p>resultat : {{ message }} </p>
-            {%endfor%}
-        </div>
-        <div>
-            {{ json }}
+                <!--{% set i = i + 1 %}-->
+           <!-- {%endfor%}-->
         </div>
     </body>
 
 </html>
-{% endblock %}
+<!--{% endblock %}-->

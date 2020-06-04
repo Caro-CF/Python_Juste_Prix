@@ -1,22 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import random
 
 import requests, json
-from flask import Flask, render_template, flash, request
-
+from flask import Flask, render_template,request
 
 app = Flask(__name__)
-app.secret_key = 'oh flash oh oh !'
 
 ##Page accueil##
 @app.route('/')
 def home():
-    flash("testing", "messages")
-    # n = random.randint(0, 100)  # rempplacer par liens api
-
     return render_template("home.html", message = "Bienvenue dans le jeux du juste prix, entrer un prix")
-
 
 def json_api():
     # global price
@@ -45,29 +38,32 @@ def json_api():
     r = requests.post(url, data=json.dumps(params))
     price = json.loads(r.text)['Products'][0]['BestOffer']['SalePrice']
 
-    return render_template("home.html", json="JsOn")
+    print(r.text)
+    print(price)
+
+    return price
 
 
 ##Jeux du juste Prix##
 @app.route('/', methods=['POST'])
 def just_price():
+    p = json_api()
+    print("p =" +p)
 
     if request.method == 'POST':
         nb = request.form['rep_user']
-        p = 15
 
-        while True:
-            var = int(nb)
-            if var < p:
-                return render_template("home.html", message = "C'est plus !")
-            else:
-                return render_template("home.html", message = "C'est moins !")
-            if var == p:
-                return render_template("home.html",  message = "Bravo")
-                break
+        price_user = float(nb)
+        price_object = float(p)
+
+        if price_user < price_object:
+            return render_template("home.html", message = "C'est plus !")
+        elif price_user > price_object:
+            return render_template("home.html", message="C'est moins !")
+        elif price_user == price_object:
+            return render_template("home.html", message="Bravo")
 
     return render_template("home.html")
-
 
 
 if __name__ == "__main__":
