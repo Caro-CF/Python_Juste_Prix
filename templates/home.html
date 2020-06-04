@@ -5,15 +5,23 @@
     </head>
     <body>
 	    <h1 >Le juste prix</h1>
+        {% block content %}
         <div>
-             <form method="post" action="">
+             <form method="post" action="/">
                 <label >Entrer un prix :</label>
-                <input type="text" name="prix" required>
+                <input type="text" name="rep_user" required>
                 <button type="submit">Envoyer</button>
             </form>
         </div>
         <div>
-            <span>{{appreciation}}</span>
+            {%for i in message %}
+                <p>resultat : {{ message }} </p>
+            {%endfor%}
+        </div>
+        <div>
+            {{ json }}
         </div>
     </body>
+
 </html>
+{% endblock %}
