@@ -50,7 +50,6 @@ def json_api(keyword, max_price):
     return name, image, price
 
 
-
 some_keywords = ["tablette", "tv", "television", "livre", "smartphone", "four", "cd", "casque", "clavier"]
 random_keyword = some_keywords[random.randint(0, len(some_keywords)-1)]
 random_max_price = random.randint(0, 499)
@@ -75,7 +74,7 @@ def just_price():
             try_list.append(str(price_user) + " : " + message)
             return show_render(message, try_list)
         elif price_user == price_object:
-            message = "Bravo, c'est bien : " + str(price_user) + " €"
+            message = "Bravo, c'est bien " + str(price_user) + " € !"
             return show_render(message, try_list)
 
     return render_template("home.html")
