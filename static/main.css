@@ -1,0 +1,13 @@
+body{
+    background: black;
+    color : white;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+h1 {
+    font-size: 2em; color: white;
+}
+
+div form label{
+    color : white;
+}
+
