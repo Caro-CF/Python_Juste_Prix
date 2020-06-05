@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import requests, json, random
+import requests, json, random, time
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -11,6 +11,7 @@ product_infos = ()
 some_keywords = ["tablette", "tv", "television", "livre", "smartphone", "four", "cd", "casque", "clavier"]
 random_keyword = some_keywords[random.randint(0, len(some_keywords)-1)]
 random_max_price = random.randint(0, 499)
+
 
 ##Appel de l'API##
 def json_api(keyword, max_price):
@@ -47,10 +48,13 @@ def json_api(keyword, max_price):
 @app.route('/')
 def home():
     global product_infos
+    global start_timer
+    start_timer = time.time()
     message = "Bienvenue dans le jeux du juste prix, deviner le prix de ce produit !"
     try_list = []
     product_infos = json_api(random_keyword, random_max_price)
     return show_render(message, try_list)
+
 
 ##Gestion des messages##
 def show_render(message, try_list):
@@ -59,30 +63,33 @@ def show_render(message, try_list):
     return render_template("home.html", name=name, image=image, message=message, try_list=try_list)
 
 
-
-
 ##Jeux du juste Prix##
 @app.route('/', methods=['POST'])
 def just_price():
     price_object = int(float(product_infos[2]))
+    timer_flag = time.time()
+    temps = int(timer_flag - start_timer)
 
     if request.method == 'POST':
         price_user = int(request.form['rep_user'])
 
         if price_user < price_object:
             message = "C'est plus !"
-            try_list.append(str(price_user) + " : " + message)
+            try_list.append(str(price_user) + " : " + message + " (en " + str(temps) + " secondes écoulées)")
             return show_render(message, try_list)
         elif price_user > price_object:
             message = "C'est moins !"
-            try_list.append(str(price_user) + " : " + message)
+            try_list.append(str(price_user) + " : " + message + " (en " + str(temps) + " secondes écoulées)")
             return show_render(message, try_list)
         elif price_user == price_object:
-            message = "Bravo, c'est bien " + str(price_user) + " € !"
+            message = "Bravo, c'est bien " + str(price_user) + " € ! (en " + str(temps) + " secondes écoulées)"
             return show_render(message, try_list)
 
     return render_template("home.html")
 
 
+
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run()
