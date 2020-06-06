@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 try_list = []
 product_infos = ()
+start = 0
 some_keywords = ["tablette", "tv", "television", "livre", "smartphone", "four", "cd", "casque", "clavier"]
 random_keyword = some_keywords[random.randint(0, len(some_keywords)-1)]
 random_max_price = random.randint(0, 499)
